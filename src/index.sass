@@ -1,0 +1,137 @@
+$vertical-padding: 6px
+$horizontal-padding: 12px
+$vertical-margin: 6px
+$horizontal-margin: 12px
+$primary-color: #6200EE
+$secondary-color: #e4e4e4
+$secondary-color-dark: #1b1b1b
+$border-radius: 8px
+$font-size: 16px
+$font-size-small: 14px
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+$font-family-code: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+$pc: 1024px    // PC screen size
+$tablet: 720px // Tablet screen size
+$phone: 320px  // Phone screen size
+
+@mixin responsive($media)
+  @if $media == phone
+    @media only screen and (max-width: $tablet - 1)
+      @content
+
+  @else if $media == tablet
+    @media only screen and (min-width: $tablet - 1) and (max-width: $pc)
+      @content
+
+  @else if $media == pc
+    @media only screen and (min-width: $pc + 1) and (min-width: $pc)
+      @content
+
+  @else if $media == pc_tablet
+    @media only screen and (min-width: $tablet - 1)
+      @content
+
+body
+  margin: 0
+  font-family: $font-family
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+  @media (prefers-color-scheme: dark)
+    background: black
+    color: white
+
+code
+  font-family: $font-family-code
+
+.app
+  padding: $vertical-margin $horizontal-margin
+
+.cinemas
+  display: flex
+
+  .tab
+    border: none
+    border-radius: 0
+    padding: $vertical-padding $horizontal-padding
+    font-family: $font-family
+    font-weight: 600
+
+    @media (prefers-color-scheme: light)
+      background: white
+      box-shadow: 0 0 0 1px $secondary-color
+
+    @media (prefers-color-scheme: dark)
+      color: white
+      background: black
+      box-shadow: 0 0 0 1px $secondary-color-dark
+
+    &.selected
+      color: white
+      background: $primary-color
+      box-shadow: 0 0 0 1px $primary-color
+      font-weight: 600
+
+    &:first-child
+      border-top-left-radius: $border-radius
+      border-bottom-left-radius: $border-radius
+
+    &:last-child
+      border-top-right-radius: $border-radius
+      border-bottom-right-radius: $border-radius
+
+.movies
+  display: flex
+  flex-wrap: wrap
+
+  .movie
+    display: flex
+    flex-direction: column
+    margin: $horizontal-margin $horizontal-margin 0 0
+    position: relative
+
+    @media (prefers-color-scheme: light)
+      box-shadow: 0 0 0 1px $secondary-color
+
+    @media (prefers-color-scheme: dark)
+      box-shadow: 0 0 0 1px $secondary-color-dark
+
+    @include responsive(pc)
+      width: calc(100% / 8 - $horizontal-margin)
+
+    @include responsive(tablet)
+      width: calc(100% / 4 - $horizontal-margin)
+
+    @include responsive(phone)
+      width: calc(100% - $horizontal-margin)
+
+
+    .poster
+      flex-grow: 1
+
+    .name
+      display: flex
+      padding: $vertical-padding $horizontal-padding
+      position: absolute
+      bottom: 0
+      color: white
+      background: $primary-color
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7)
+      font-size: $font-size-small
+      font-weight: 600
+      flex-grow: 1
+      visibility: hidden
+
+    &:hover
+      box-shadow: 0 0 0 3px $primary-color
+      cursor: pointer
+
+      .name
+        visibility: visible
+
+.loader
+  // background: white
+  position: absolute
+  top: $vertical-margin
+  left: $horizontal-margin
+  font-weight: 600
