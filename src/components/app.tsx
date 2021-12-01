@@ -63,7 +63,7 @@ const App = (): React.ReactElement => {
       )}
       <h1>Zine</h1>
       <div className="cinemas">
-        {cinemas.map((cinema) => {
+        {cinemas?.map((cinema) => {
           return (
             <CinemaTab
               key={cinema.id}
