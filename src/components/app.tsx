@@ -37,7 +37,7 @@ const App = (): React.ReactElement => {
 
     setLoading(true);
     setSelectedCinema(cinema);
-    fetch(`${api}/zine/cinema/${cinema.id}/movies`)
+    fetch(`${api}/zine/cinema/${cinema.id}`)
       .then(async (resp) => {
         const cinemaMovies: CinemaMovies = await resp.json();
         setMovies(cinemaMovies.movies);
