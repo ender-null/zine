@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { Session } from "../models/cinema.interface";
 import { MovieDetailsProps } from "../models/props.interface";
 import YoutubeEmbed from "./youtube-embed";
 
@@ -8,9 +9,11 @@ const MovieDetails = ({
 }: MovieDetailsProps): React.ReactElement => {
   useEffect(() => {
     document.addEventListener("keyup", exit, false);
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keyup", exit, false);
+      document.body.style.overflow = "unset";
     };
   }, []);
 
@@ -26,19 +29,26 @@ const MovieDetails = ({
     }
   }, []);
 
+  const formatSession = (session: Session): string => {
+    const text = `Sala ${session.room} | ${session.time}`;
+    return session.type ? `[${session.type}] ${text}` : text;
+  };
+
   return (
     <div className="movie-details">
       <div className="header">
-        <h3 className="name">{movie.name}</h3>
-        <button
-          className="button"
-          onClick={() => handleOpenInTab(movie.source)}
-        >
-          Página web
-        </button>
-        <button className="button danger" onClick={onClose}>
-          Cerrar
-        </button>
+        <h3 className="h3 name">{movie.name}</h3>
+        <div className="buttons">
+          <button
+            className="button"
+            onClick={() => handleOpenInTab(movie.source)}
+          >
+            Página web
+          </button>
+          <button className="button danger" onClick={onClose}>
+            Cerrar
+          </button>
+        </div>
       </div>
       <div className="content">
         <div className="sidebar">
@@ -52,7 +62,7 @@ const MovieDetails = ({
                   className="button session"
                   onClick={() => handleOpenInTab(session.url)}
                 >
-                  Sala {session.room} | {session.time}
+                  {formatSession(session)}
                 </button>
               );
             })}

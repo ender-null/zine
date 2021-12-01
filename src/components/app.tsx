@@ -61,7 +61,7 @@ const App = (): React.ReactElement => {
       {selectedMovie && (
         <MovieDetails movie={selectedMovie} onClose={handleClose} />
       )}
-      <h1>Zine</h1>
+      <h1 className="h1">Zine</h1>
       <div className="cinemas">
         {cinemas?.map((cinema) => {
           return (
@@ -75,7 +75,7 @@ const App = (): React.ReactElement => {
         })}
       </div>
 
-      <h2>{selectedCinema?.name}</h2>
+      <h2 className="h2">{selectedCinema?.name}</h2>
       <div className="movies">
         {movies?.map((movie) => {
           return (

@@ -1,7 +1,7 @@
 $vertical-padding: 6px
 $horizontal-padding: 12px
-$vertical-margin: 10px
-$horizontal-margin: 20px
+$vertical-margin: 15px
+$horizontal-margin: 30px
 $primary-color: #6200EE
 $secondary-color: #e4e4e4
 $secondary-color-dark: #1b1b1b
@@ -45,29 +45,56 @@ body
 code
   font-family: $font-family-code
 
-h1
-  margin-bottom: $vertical-margin
+.h1, .h2, .h3
+  margin: 0
+  padding: 0
+  font-size: $font-size
+  font-weight: 800
+  flex-grow: 1
+  font-size: 34px
+  margin: $vertical-margin 0 $vertical-margin * 2
+
+.h1
+  font-size: 34px
+
+.h2
+  font-size: 28px
+
+.h3
+  font-size: 24px
 
 .app
   padding: $vertical-margin $horizontal-margin
 
 .button
   padding: $vertical-padding $horizontal-padding
-  margin: 0 $horizontal-margin $horizontal-margin 0
+  margin: 0 $horizontal-padding $horizontal-padding 0
   font-family: $font-family
   font-weight: 600
   border: none
   border-radius: $border-radius
   background: none
   backdrop-filter: blur(5px)
+  white-space: nowrap
+
+  padding: 5px 10px
+  border: none
+  outline: none
+  border-radius: 50px
+
+  color: #fff
+  cursor: pointer
+  text-align: center
+  outline: 0
 
   @media (prefers-color-scheme: light)
-    background: white
+    color: #000
+    background: #fff
     box-shadow: 0 0 0 1px $secondary-color
 
   @media (prefers-color-scheme: dark)
-    color: white
-    background: black
+    color: #fff
+    background: #000
     box-shadow: 0 0 0 1px $secondary-color-dark
 
   &.selected
@@ -77,9 +104,17 @@ h1
     font-weight: 600
 
   &:hover
-    color: $primary-color
-    box-shadow: 0 0 0 2px $primary-color
-    cursor: pointer
+    color: #fff
+    background: lighten($primary-color, 10%)
+    box-shadow: 0 0 0 1px lighten($primary-color, 10%)
+
+  &:active
+    background: darken($primary-color, 10%)
+    box-shadow: 0 0 0 1px darken($primary-color, 10%)
+
+  &:disabled
+    background: desaturate($primary-color, 100%)
+    box-shadow: 0 0 0 1px desaturate($primary-color, 100%)
 
   &:last-child
     margin-right: 0
@@ -89,6 +124,8 @@ h1
     box-shadow: 0 0 0 1px $danger-color
 
     &:hover
+      color: #fff
+      background: $danger-color
       box-shadow: 0 0 0 2px $danger-color
 
 .cinemas
@@ -111,16 +148,25 @@ h1
       box-shadow: 0 0 0 1px $secondary-color-dark
 
     @include responsive(pc)
-      margin: 0 $horizontal-margin $horizontal-margin 0
-      width: calc(100% / 8 - $horizontal-margin)
+      margin: 0 $horizontal-padding $horizontal-padding 0
+      width: calc(100% / 8 - ($horizontal-padding * 7 / 8))
+
+      &:nth-child(8n)
+        margin-right: 0
 
     @include responsive(tablet)
-      margin: 0 $horizontal-margin $horizontal-margin 0
-      width: calc(100% / 4 - $horizontal-margin)
+      margin: 0 $horizontal-padding $horizontal-padding 0
+      width: calc(100% / 6 - ($horizontal-padding * 5 / 6))
+
+      &:nth-child(6n)
+        margin-right: 0
 
     @include responsive(phone)
-      margin: 0 0 $horizontal-margin 0
-      width: 100%
+      margin: 0 $horizontal-padding $horizontal-padding 0
+      width: calc(100% / 2 - ($horizontal-padding / 2))
+
+      &:nth-child(2n)
+        margin-right: 0
 
     .poster
       display: flex
@@ -160,19 +206,25 @@ h1
   z-index: 100
 
   @media (prefers-color-scheme: light)
-    background: rgba(#fff, 0.7)
+    background: rgba(#fff, 0.9)
 
   @media (prefers-color-scheme: dark)
-    background: rgba(#000, 0.8)
+    background: rgba(#000, 0.9)
 
   .header
     display: flex
     align-items: center
 
+    @include responsive(phone)
+      flex-direction: column-reverse
+
     .name
       flex-grow: 1
       font-size: 34px
-      margin-bottom: $vertical-margin
+      margin-bottom: $vertical-margin * 2
+
+    .buttons
+      display: flex
 
   .content
     display: flex
@@ -188,8 +240,17 @@ h1
         margin-right: $horizontal-margin
 
       .poster
+        @media (prefers-color-scheme: light)
+          box-shadow: 0 0 0 1px $secondary-color
+
+        @media (prefers-color-scheme: dark)
+          box-shadow: 0 0 0 1px $secondary-color-dark
+
         @include responsive(pc)
           width: 320px
+
+        @include responsive(tablet)
+          width: 240px
 
         @include responsive(phone)
           width: 100%
@@ -198,6 +259,7 @@ h1
         display: flex
         flex-direction: column
         align-items: center
+        margin-bottom: $vertical-margin
 
         .heading
           margin-top: $vertical-margin
@@ -219,6 +281,8 @@ h1
     font-weight: 800
 
 .video-responsive
+  margin-top: $vertical-margin * 2
+
   iframe
     width: 100%
 
