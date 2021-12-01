@@ -23,8 +23,9 @@ export interface Movie {
 }
 
 export interface Session {
-  time: string;
   room: string;
+  time: string;
+  date?: string;
   type?: string;
   url?: string;
 }
