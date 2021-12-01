@@ -8,11 +8,9 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
-
-RUN yarn install
-
 COPY . .
 
+RUN yarn --frozen-lockfile
 RUN yarn build
 
 FROM nginx:latest AS release
