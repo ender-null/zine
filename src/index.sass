@@ -45,6 +45,9 @@ body
 code
   font-family: $font-family-code
 
+h1
+  margin-bottom: $vertical-margin
+
 .app
   padding: $vertical-margin $horizontal-margin
 
@@ -169,7 +172,7 @@ code
     .name
       flex-grow: 1
       font-size: 34px
-      margin: $vertical-margin 0
+      margin-bottom: $vertical-margin
 
   .content
     display: flex
@@ -179,6 +182,9 @@ code
 
     .sidebar
       @include responsive(pc)
+        margin-right: $horizontal-margin
+
+      @include responsive(tablet)
         margin-right: $horizontal-margin
 
       .poster
@@ -192,6 +198,9 @@ code
         display: flex
         flex-direction: column
         align-items: center
+
+        .heading
+          margin-top: $vertical-margin
 
         @include responsive(phone)
           margin-bottom: $vertical-margin

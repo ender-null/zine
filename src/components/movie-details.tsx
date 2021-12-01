@@ -86,7 +86,9 @@ const MovieDetails = ({
           {movie.duration && (
             <div className="detail">
               <h5 className="heading">Duración</h5>
-              <span>{movie.duration} min.</span>
+              <span>
+                {movie.durationReadable} / {movie.duration} min.
+              </span>
             </div>
           )}
           {movie.trailer && (
