@@ -8,7 +8,7 @@ const CinemaTab = ({
 }: CinemaTabProps): React.ReactElement => {
   return (
     <button
-      className={selected ? "tab selected" : "tab"}
+      className={selected ? "button selected" : "button"}
       onClick={() => selectCinema(cinema)}
     >
       {cinema.name}

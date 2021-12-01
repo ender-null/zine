@@ -8,7 +8,7 @@ const YoutubeEmbed = ({
   const [videoId, setVideoId] = useState(embedId);
   useEffect(() => {
     if (url) {
-      const match = /v=(\w+)/.exec(url);
+      const match = /v=([\w|-]+)/.exec(url);
       if (match && match[1]) {
         setVideoId(match[1]);
       }
