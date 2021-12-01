@@ -1,10 +1,11 @@
 $vertical-padding: 6px
 $horizontal-padding: 12px
-$vertical-margin: 6px
-$horizontal-margin: 12px
+$vertical-margin: 10px
+$horizontal-margin: 20px
 $primary-color: #6200EE
 $secondary-color: #e4e4e4
 $secondary-color-dark: #1b1b1b
+$danger-color: rgb(255,59,48)
 $border-radius: 8px
 $font-size: 16px
 $font-size-small: 14px
@@ -49,13 +50,16 @@ code
 
 .cinemas
   display: flex
+  flex-wrap: wrap
 
   .tab
-    border: none
-    border-radius: 0
     padding: $vertical-padding $horizontal-padding
+    margin: 0 $horizontal-margin $horizontal-margin 0
     font-family: $font-family
     font-weight: 600
+    border: none
+    border-radius: $border-radius
+
 
     @media (prefers-color-scheme: light)
       background: white
@@ -67,18 +71,15 @@ code
       box-shadow: 0 0 0 1px $secondary-color-dark
 
     &.selected
-      color: white
+      color: white !important
       background: $primary-color
       box-shadow: 0 0 0 1px $primary-color
       font-weight: 600
 
-    &:first-child
-      border-top-left-radius: $border-radius
-      border-bottom-left-radius: $border-radius
-
-    &:last-child
-      border-top-right-radius: $border-radius
-      border-bottom-right-radius: $border-radius
+    &:hover
+      color: $primary-color
+      box-shadow: 0 0 0 2px $primary-color
+      cursor: pointer
 
 .movies
   display: flex
@@ -87,7 +88,6 @@ code
   .movie
     display: flex
     flex-direction: column
-    margin: $horizontal-margin $horizontal-margin 0 0
     position: relative
 
     @media (prefers-color-scheme: light)
@@ -97,17 +97,20 @@ code
       box-shadow: 0 0 0 1px $secondary-color-dark
 
     @include responsive(pc)
+      margin: 0 $horizontal-margin $horizontal-margin 0
       width: calc(100% / 8 - $horizontal-margin)
 
     @include responsive(tablet)
+      margin: 0 $horizontal-margin $horizontal-margin 0
       width: calc(100% / 4 - $horizontal-margin)
 
     @include responsive(phone)
-      width: calc(100% - $horizontal-margin)
+      margin: 0 0 $horizontal-margin 0
+      width: 100%
 
 
     .poster
-      flex-grow: 1
+      display: flex
 
     .name
       display: flex
@@ -129,8 +132,112 @@ code
       .name
         visibility: visible
 
+.movie-details
+  position: fixed
+  overflow: auto
+  backdrop-filter: blur(15px)
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  display: flex
+  flex-direction: column
+  padding: $vertical-margin $horizontal-margin
+  z-index: 100
+
+  @media (prefers-color-scheme: light)
+    background: rgba(#fff, 0.7)
+
+  @media (prefers-color-scheme: dark)
+    background: rgba(#000, 0.8)
+
+  .header
+    display: flex
+    align-items: center
+
+    .name
+      flex-grow: 1
+      font-size: 34px
+      margin: $vertical-margin 0
+
+    .close
+      font-weight: 600
+      border: none
+      border-radius: $border-radius
+      background: none
+      backdrop-filter: blur(5px)
+      padding: $vertical-padding $horizontal-padding
+      color: $danger-color
+      font-size: $font-size
+      font-family: $font-family
+      cursor: pointer
+      box-shadow: 0 0 0 1px $danger-color
+
+      &:hover
+        box-shadow: 0 0 0 2px $danger-color
+
+  .content
+    display: flex
+
+    @include responsive(phone)
+      flex-direction: column
+
+    .sidebar
+      @include responsive(pc)
+        margin-right: $horizontal-margin
+
+      .poster
+        @include responsive(pc)
+          width: 320px
+
+        @include responsive(phone)
+          width: 100%
+
+      .sessions
+        display: flex
+        flex-direction: column
+
+        @include responsive(phone)
+          margin-bottom: $vertical-margin
+
+        .session
+          background: none
+          backdrop-filter: blur(5px)
+          border: none
+          border-radius: $border-radius
+          font-family: $font-family
+          font-size: $font-size
+          padding: $vertical-padding $horizontal-padding
+          margin: $vertical-margin 0 0 0
+          font-weight: 600
+          
+          @media (prefers-color-scheme: light)
+            color: #000
+            box-shadow: 0 0 0 1px $secondary-color
+
+          @media (prefers-color-scheme: dark)
+            color: #fff
+            box-shadow: 0 0 0 1px $secondary-color-dark
+
+          &:hover
+            color: $primary-color
+            box-shadow: 0 0 0 2px $primary-color
+            cursor: pointer
+
+    .detail
+      margin-bottom: $vertical-margin
+
+      h5
+        margin: 0
+        padding: 0
+        font-size: $font-size
+        font-weight: 800
+
+.video-responsive
+  iframe
+    width: 100%
+
 .loader
-  // background: white
   position: absolute
   top: $vertical-margin
   left: $horizontal-margin

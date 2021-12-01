@@ -3,12 +3,16 @@ import { Cinema, CinemaMovies, Movie } from "../models/cinema.interface";
 import CinemaTab from "./cinema-tab";
 import Loader from "./loader";
 import MovieCard from "./movie-card";
+import MovieDetails from "./movie-details";
 
 const api = "https://api.drk.cat";
 
 const App = (): React.ReactElement => {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [selectedCinema, setSelectedCinema] = useState<Cinema | undefined>(
+    undefined
+  );
+  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(
     undefined
   );
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -44,8 +48,19 @@ const App = (): React.ReactElement => {
       });
   };
 
+  const handleSelectMovie = (movie: Movie | undefined) => {
+    setSelectedMovie(movie);
+  };
+
+  const handleClose = () => {
+    setSelectedMovie(undefined);
+  };
+
   return (
     <div className="app">
+      {selectedMovie && (
+        <MovieDetails movie={selectedMovie} onClose={handleClose} />
+      )}
       <h1>Zine</h1>
       <div className="cinemas">
         {cinemas.map((cinema) => {
@@ -63,7 +78,13 @@ const App = (): React.ReactElement => {
       <h2>{selectedCinema?.name}</h2>
       <div className="movies">
         {movies?.map((movie) => {
-          return <MovieCard key={movie.id} movie={movie} />;
+          return (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              selectMovie={handleSelectMovie}
+            />
+          );
         })}
       </div>
       {loading && <Loader />}
