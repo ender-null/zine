@@ -1,4 +1,4 @@
-import { Cinema, Movie } from "./cinema.interface";
+import { Actor, Cinema, Crew, MoviePro } from "./cinema.interface";
 
 export interface CinemaTabProps {
   cinema: Cinema;
@@ -7,16 +7,20 @@ export interface CinemaTabProps {
 }
 
 export interface MovieCardProps {
-  movie: Movie;
-  selectMovie: (movie: Movie) => void;
+  movie: MoviePro;
+  selectMovie: (movie: MoviePro) => void;
 }
 
 export interface MovieDetailsProps {
-  movie: Movie;
+  movie: MoviePro;
   onClose: () => void;
 }
 
 export interface YoutubeEmbedProps {
   embedId?: string;
   url?: string;
+}
+
+export interface CastProps {
+  cast: Crew | Actor;
 }

@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 import { Session } from "../models/cinema.interface";
 import { MovieDetailsProps } from "../models/props.interface";
+import Cast from "./cast";
 import YoutubeEmbed from "./youtube-embed";
+
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 
 const MovieDetails = ({
   movie,
@@ -37,13 +43,37 @@ const MovieDetails = ({
   return (
     <div className="movie-details">
       <div className="header">
-        <h3 className="h3 name">{movie.name}</h3>
+        <div className="title">
+          <h3 className="h3 name">
+            {movie.name}
+            {movie.year ? ` (${movie.year})` : null}
+          </h3>
+          {movie.tagline && <p className="tagline">{movie.tagline}</p>}
+        </div>
         <div className="buttons">
+          <button
+            className="button"
+            onClick={() =>
+              handleOpenInTab(
+                `https://www.themoviedb.org/movie/${movie.theMovieDbId}?language=es-ES`
+              )
+            }
+          >
+            The Movie Database
+          </button>
+          <button
+            className="button"
+            onClick={() =>
+              handleOpenInTab(`https://www.imdb.com/title/${movie.imDbId}/`)
+            }
+          >
+            IMDb
+          </button>
           <button
             className="button"
             onClick={() => handleOpenInTab(movie.source)}
           >
-            Página web
+            Página web del Cine
           </button>
           <button className="button danger" onClick={onClose}>
             Cerrar
@@ -69,6 +99,18 @@ const MovieDetails = ({
           </div>
         </div>
         <div className="details">
+          {movie.originalName && (
+            <div className="detail">
+              <h5 className="heading">Título original</h5>
+              <span>{movie.originalName}</span>
+            </div>
+          )}
+          {movie.releaseDate && (
+            <div className="detail">
+              <h5 className="heading">Fecha de estreno</h5>
+              <span>{movie.releaseDate}</span>
+            </div>
+          )}
           {movie.synopsis && (
             <div className="detail">
               <h5 className="heading">Sinopsis</h5>
@@ -78,13 +120,29 @@ const MovieDetails = ({
           {movie.director && (
             <div className="detail">
               <h5 className="heading">Director</h5>
-              <span>{movie.director}</span>
+              <div className="cast-list">
+                <Cast key={movie.director.name} cast={movie.director} />
+              </div>
+            </div>
+          )}
+          {movie.writers && (
+            <div className="detail">
+              <h5 className="heading">Guionistas</h5>
+              <div className="cast-list">
+                {movie.writers.map((writer) => {
+                  return <Cast key={writer.name} cast={writer} />;
+                })}
+              </div>
             </div>
           )}
           {movie.actors && (
             <div className="detail">
               <h5 className="heading">Intérpretes</h5>
-              <span>{movie.actors.join(", ")}</span>
+              <div className="cast-list">
+                {movie.actors.map((actor) => {
+                  return <Cast key={actor.name} cast={actor} />;
+                })}
+              </div>
             </div>
           )}
           {movie.genres && (
@@ -99,6 +157,12 @@ const MovieDetails = ({
               <span>
                 {movie.durationReadable} / {movie.duration} min.
               </span>
+            </div>
+          )}
+          {movie.budget > 0 && (
+            <div className="detail">
+              <h5 className="heading">Presupuesto</h5>
+              <span>{formatter.format(movie.budget)}</span>
             </div>
           )}
           {movie.trailer && (

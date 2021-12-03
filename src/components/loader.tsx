@@ -7,7 +7,13 @@ const Loader = (): React.ReactElement => {
     setTimeout(() => {
       setShow(true);
     }, 500);
-  });
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   return show ? <div className="loader">Loading...</div> : <div></div>;
 };
 

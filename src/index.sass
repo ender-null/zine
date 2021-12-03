@@ -135,6 +135,7 @@ code
     display: flex
     flex-direction: column
     position: relative
+    border-radius: $border-radius
 
     @media (prefers-color-scheme: light)
       box-shadow: 0 0 0 1px $secondary-color
@@ -166,6 +167,7 @@ code
     .poster
       display: flex
       width: 100%
+      border-radius: $border-radius
 
     .name
       display: flex
@@ -178,6 +180,7 @@ code
       font-size: $font-size-small
       font-weight: 600
       flex-grow: 1
+      border-top-right-radius: $border-radius
       visibility: hidden
 
     &:hover
@@ -213,10 +216,17 @@ code
     @include responsive(phone)
       flex-direction: column-reverse
 
-    .name
+    .title
       flex-grow: 1
-      font-size: 34px
       margin-bottom: $vertical-margin * 2
+
+      .name
+        font-size: 34px
+        margin-bottom: 0
+      
+      .tagline
+        margin: 0 0 $vertical-margin 0
+        font-size: $font-size
 
     .buttons
       display: flex
@@ -235,6 +245,8 @@ code
         margin-right: $horizontal-margin
 
       .poster
+        border-radius: $border-radius
+
         @media (prefers-color-scheme: light)
           box-shadow: 0 0 0 1px $secondary-color
 
@@ -269,6 +281,27 @@ code
     .detail
       margin-bottom: $vertical-margin
 
+      .cast-list
+        display: flex
+        flex-wrap: wrap
+
+        .cast
+          display: flex
+          flex-direction: column
+          margin: 0 $horizontal-margin $vertical-margin 0
+          width: 100px
+
+          img
+            width: 100px
+            height: 150px
+            border-radius: $border-radius
+
+            @media (prefers-color-scheme: light)
+              box-shadow: 0 0 0 1px $secondary-color
+
+            @media (prefers-color-scheme: dark)
+              box-shadow: 0 0 0 1px $secondary-color-dark
+
   .heading
     margin: 0
     padding: 0
@@ -280,9 +313,29 @@ code
 
   iframe
     width: 100%
+    border-radius: $border-radius
+
+    @media (prefers-color-scheme: light)
+      box-shadow: 0 0 0 1px $secondary-color
+
+    @media (prefers-color-scheme: dark)
+      box-shadow: 0 0 0 1px $secondary-color-dark
 
 .loader
-  position: absolute
-  top: $vertical-margin
-  left: $horizontal-margin
+  position: fixed
+  font-size: 24px
   font-weight: 600
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  backdrop-filter: blur(15px)
+
+  @media (prefers-color-scheme: light)
+    background: rgba(255,255,255,0.9)
+
+  @media (prefers-color-scheme: dark)
+    background: rgba(0,0,0,0.9)

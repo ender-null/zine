@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Cinema, CinemaMovies, Movie } from "../models/cinema.interface";
+import { Cinema, CinemaMoviesPro, MoviePro } from "../models/cinema.interface";
 import CinemaTab from "./cinema-tab";
 import Loader from "./loader";
 import MovieCard from "./movie-card";
@@ -12,10 +12,10 @@ const App = (): React.ReactElement => {
   const [selectedCinema, setSelectedCinema] = useState<Cinema | undefined>(
     undefined
   );
-  const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>(
+  const [selectedMovie, setSelectedMovie] = useState<MoviePro | undefined>(
     undefined
   );
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MoviePro[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,9 +37,9 @@ const App = (): React.ReactElement => {
 
     setLoading(true);
     setSelectedCinema(cinema);
-    fetch(`${api}/zine/cinema/${cinema.id}`)
+    fetch(`${api}/zine/cinema/${cinema.id}/pro`)
       .then(async (resp) => {
-        const cinemaMovies: CinemaMovies = await resp.json();
+        const cinemaMovies: CinemaMoviesPro = await resp.json();
         setMovies(cinemaMovies.movies);
         setLoading(false);
       })
@@ -48,7 +48,7 @@ const App = (): React.ReactElement => {
       });
   };
 
-  const handleSelectMovie = (movie: Movie | undefined) => {
+  const handleSelectMovie = (movie: MoviePro | undefined) => {
     setSelectedMovie(movie);
   };
 
