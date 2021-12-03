@@ -153,22 +153,22 @@ const MovieDetails = ({
               </div>
             </div>
           )}
-          {movie.writers && (
-            <div className="detail">
-              <h5 className="heading">Guionistas</h5>
-              <div className="cast-list">
-                {movie.writers.map((writer) => {
-                  return <Cast key={writer.name} cast={writer} />;
-                })}
-              </div>
-            </div>
-          )}
           {movie.actors && (
             <div className="detail">
               <h5 className="heading">Intérpretes</h5>
               <div className="cast-list">
                 {movie.actors.map((actor) => {
                   return <Cast key={actor.name} cast={actor} />;
+                })}
+              </div>
+            </div>
+          )}
+          {movie.writers && (
+            <div className="detail">
+              <h5 className="heading">Guionistas</h5>
+              <div className="cast-list">
+                {movie.writers.map((writer) => {
+                  return <Cast key={writer.name} cast={writer} />;
                 })}
               </div>
             </div>
