@@ -51,24 +51,28 @@ const MovieDetails = ({
           {movie.tagline && <p className="tagline">{movie.tagline}</p>}
         </div>
         <div className="buttons">
-          <button
-            className="button"
-            onClick={() =>
-              handleOpenInTab(
-                `https://www.themoviedb.org/movie/${movie.theMovieDbId}?language=es-ES`
-              )
-            }
-          >
-            The Movie Database
-          </button>
-          <button
-            className="button"
-            onClick={() =>
-              handleOpenInTab(`https://www.imdb.com/title/${movie.imDbId}/`)
-            }
-          >
-            IMDb
-          </button>
+          {movie.theMovieDbId && (
+            <button
+              className="button"
+              onClick={() =>
+                handleOpenInTab(
+                  `https://www.themoviedb.org/movie/${movie.theMovieDbId}?language=es-ES`
+                )
+              }
+            >
+              The Movie Database
+            </button>
+          )}
+          {movie.imDbId && (
+            <button
+              className="button"
+              onClick={() =>
+                handleOpenInTab(`https://www.imdb.com/title/${movie.imDbId}/`)
+              }
+            >
+              IMDb
+            </button>
+          )}
           <button
             className="button"
             onClick={() => handleOpenInTab(movie.source)}
@@ -105,16 +109,36 @@ const MovieDetails = ({
               <span>{movie.originalName}</span>
             </div>
           )}
+          {movie.synopsis && (
+            <div className="detail">
+              <h5 className="heading">Sinopsis</h5>
+              <span>{movie.synopsis}</span>
+            </div>
+          )}
+          {movie.genres && (
+            <div className="detail">
+              <h5 className="heading">Género</h5>
+              <span>{movie.genres.join(", ")}</span>
+            </div>
+          )}
           {movie.releaseDate && (
             <div className="detail">
               <h5 className="heading">Fecha de estreno</h5>
               <span>{movie.releaseDate}</span>
             </div>
           )}
-          {movie.synopsis && (
+          {movie.duration && (
             <div className="detail">
-              <h5 className="heading">Sinopsis</h5>
-              <span>{movie.synopsis}</span>
+              <h5 className="heading">Duración</h5>
+              <span>
+                {movie.durationReadable} / {movie.duration} min.
+              </span>
+            </div>
+          )}
+          {movie.budget > 0 && (
+            <div className="detail">
+              <h5 className="heading">Presupuesto</h5>
+              <span>{formatter.format(movie.budget)}</span>
             </div>
           )}
           {movie.director && (
@@ -143,26 +167,6 @@ const MovieDetails = ({
                   return <Cast key={actor.name} cast={actor} />;
                 })}
               </div>
-            </div>
-          )}
-          {movie.genres && (
-            <div className="detail">
-              <h5 className="heading">Género</h5>
-              <span>{movie.genres.join(", ")}</span>
-            </div>
-          )}
-          {movie.duration && (
-            <div className="detail">
-              <h5 className="heading">Duración</h5>
-              <span>
-                {movie.durationReadable} / {movie.duration} min.
-              </span>
-            </div>
-          )}
-          {movie.budget > 0 && (
-            <div className="detail">
-              <h5 className="heading">Presupuesto</h5>
-              <span>{formatter.format(movie.budget)}</span>
             </div>
           )}
           {movie.trailer && (
