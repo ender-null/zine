@@ -5,8 +5,6 @@ import Loader from "./loader";
 import MovieCard from "./movie-card";
 import MovieDetails from "./movie-details";
 
-const api = "https://api.drk.cat";
-
 const App = (): React.ReactElement => {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [selectedCinema, setSelectedCinema] = useState<Cinema | undefined>(
@@ -20,7 +18,7 @@ const App = (): React.ReactElement => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${api}/zine/cinema`)
+    fetch(`${process.env.REACT_APP_API_URL}/zine/cinema`)
       .then(async (resp) => {
         const _cinemas = await resp.json();
         setCinemas(_cinemas);
@@ -37,7 +35,7 @@ const App = (): React.ReactElement => {
 
     setLoading(true);
     setSelectedCinema(cinema);
-    fetch(`${api}/zine/cinema/${cinema.id}/pro`)
+    fetch(`${process.env.REACT_APP_API_URL}/zine/cinema/${cinema.id}/pro`)
       .then(async (resp) => {
         const cinemaMovies: CinemaMoviesPro = await resp.json();
         setMovies(cinemaMovies.movies);
@@ -61,7 +59,10 @@ const App = (): React.ReactElement => {
       {selectedMovie && (
         <MovieDetails movie={selectedMovie} onClose={handleClose} />
       )}
-      <h1 className="h1">Zine</h1>
+      <h1 className="h1">
+        {process.env.REACT_APP_TITLE}{" "}
+        <span className="version">v{process.env.REACT_APP_VERSION}</span>
+      </h1>
       <div className="cinemas">
         {cinemas?.map((cinema) => {
           return (
@@ -74,7 +75,6 @@ const App = (): React.ReactElement => {
           );
         })}
       </div>
-
       <h2 className="h2">{selectedCinema?.name}</h2>
       <div className="movies">
         {movies?.map((movie) => {

@@ -16,10 +16,14 @@ const MovieDetails = ({
   useEffect(() => {
     document.addEventListener("keyup", exit, false);
     document.body.style.overflow = "hidden";
+    document.title = `${movie.name}${movie.year ? ` (${movie.year})` : ""} | ${
+      process.env.REACT_APP_TITLE
+    }`;
 
     return () => {
       document.removeEventListener("keyup", exit, false);
       document.body.style.overflow = "unset";
+      document.title = process.env.REACT_APP_TITLE || "";
     };
   }, []);
 
