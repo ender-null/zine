@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Cinema, CinemaMoviesPro, MoviePro } from "../models/cinema.interface";
-import CinemaTab from "./cinema-tab";
 import Loader from "./loader";
 import MovieCard from "./movie-card";
 import MovieDetails from "./movie-details";
@@ -22,7 +21,7 @@ const App = (): React.ReactElement => {
       .then(async (resp) => {
         const _cinemas = await resp.json();
         setCinemas(_cinemas);
-        handleSelectCinema(_cinemas[0]);
+        handleChangeCinema(_cinemas[0]);
         setLoading(false);
       })
       .catch((ex) => {
@@ -30,7 +29,7 @@ const App = (): React.ReactElement => {
       });
   }, []);
 
-  const handleSelectCinema = (cinema: Cinema) => {
+  const handleChangeCinema = (cinema: Cinema) => {
     if (selectedCinema && selectedCinema.id === cinema.id) return;
 
     setLoading(true);
@@ -46,6 +45,12 @@ const App = (): React.ReactElement => {
       });
   };
 
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(event.target.value);
+    const item = cinemas.find((item) => item.id === event.target.value);
+    if (item) handleChangeCinema(item);
+  };
+
   const handleSelectMovie = (movie: MoviePro | undefined) => {
     setSelectedMovie(movie);
   };
@@ -59,23 +64,24 @@ const App = (): React.ReactElement => {
       {selectedMovie && (
         <MovieDetails movie={selectedMovie} onClose={handleClose} />
       )}
-      <h1 className="h1">
+      <h1 className="h1 title">
         {process.env.REACT_APP_TITLE}{" "}
         <span className="version">v{process.env.REACT_APP_VERSION}</span>
       </h1>
-      <div className="cinemas">
+      <p className="description">{process.env.REACT_APP_DESCRIPTION}</p>
+      <select
+        className="h2 select-cinema"
+        value={selectedCinema?.id}
+        onChange={(e) => handleSelect(e)}
+      >
         {cinemas?.map((cinema) => {
           return (
-            <CinemaTab
-              key={cinema.id}
-              cinema={cinema}
-              selected={selectedCinema?.id === cinema.id}
-              selectCinema={handleSelectCinema}
-            />
+            <option key={cinema.id} value={cinema.id}>
+              {cinema.name} ({cinema.location})
+            </option>
           );
         })}
-      </div>
-      <h2 className="h2">{selectedCinema?.name}</h2>
+      </select>
       <div className="movies">
         {movies?.map((movie) => {
           return (
@@ -87,7 +93,7 @@ const App = (): React.ReactElement => {
           );
         })}
       </div>
-      {loading && <Loader />}
+      {loading && <Loader text="Cargando..." />}
     </div>
   );
 };

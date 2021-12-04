@@ -37,11 +37,9 @@ const Cast = ({ cast }: CastProps): React.ReactElement => {
   return (
     <div className="cast">
       <img src={getPicture()} />
-      <strong>{cast.name}</strong>
+      <span className="cast-name">{cast.name}</span>
       {"character" in cast && cast.character ? (
-        <span>
-          as <em>{cast.character}</em>
-        </span>
+        <span className="character">{cast.character}</span>
       ) : null}
     </div>
   );

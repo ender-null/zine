@@ -24,3 +24,7 @@ export interface YoutubeEmbedProps {
 export interface CastProps {
   cast: Crew | Actor;
 }
+
+export interface LoaderProps {
+  text?: string;
+}

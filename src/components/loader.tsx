@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { LoaderProps } from "../models/props.interface";
 
-const Loader = (): React.ReactElement => {
+const Loader = ({ text }: LoaderProps): React.ReactElement => {
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -14,7 +15,11 @@ const Loader = (): React.ReactElement => {
     };
   }, []);
 
-  return show ? <div className="loader">Loading...</div> : <div></div>;
+  return show ? (
+    <div className="loader">{text || "Loading..."}</div>
+  ) : (
+    <div></div>
+  );
 };
 
 export default Loader;
