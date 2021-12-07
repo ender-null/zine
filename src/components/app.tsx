@@ -69,19 +69,21 @@ const App = (): React.ReactElement => {
         <span className="version">v{process.env.REACT_APP_VERSION}</span>
       </h1>
       <p className="description">{process.env.REACT_APP_DESCRIPTION}</p>
-      <select
-        className="h2 select-cinema"
-        value={selectedCinema?.id}
-        onChange={(e) => handleSelect(e)}
-      >
-        {cinemas?.map((cinema) => {
-          return (
-            <option key={cinema.id} value={cinema.id}>
-              {cinema.name} ({cinema.location})
-            </option>
-          );
-        })}
-      </select>
+      <div className="select-cinema">
+        <select
+          className="h2"
+          value={selectedCinema?.id}
+          onChange={(e) => handleSelect(e)}
+        >
+          {cinemas?.map((cinema) => {
+            return (
+              <option key={cinema.id} value={cinema.id}>
+                {cinema.name} ({cinema.location})
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <div className="movies">
         {movies?.map((movie) => {
           return (
