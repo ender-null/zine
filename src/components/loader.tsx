@@ -5,13 +5,14 @@ const Loader = ({ text }: LoaderProps): React.ReactElement => {
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setShow(true);
     }, 500);
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "unset";
+      clearTimeout(timeout);
     };
   }, []);
 

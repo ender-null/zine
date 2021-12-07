@@ -6,9 +6,11 @@ $primary-color: #6200EE
 $secondary-color: #e4e4e4
 $secondary-color-dark: #1b1b1b
 $danger-color: rgb(255,59,48)
+$success-color: rgb(52,199,89)
 $border-radius: 8px
 $border-radius-round: 50px
 $subtle-opacity: 0.7
+$drop-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1)
 $font-size: 16px
 $font-size-small: 14px
 $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
@@ -86,43 +88,54 @@ code
   @media (prefers-color-scheme: light)
     color: #000
     background: #fff
-    box-shadow: 0 0 0 1px $secondary-color
+    box-shadow: $drop-shadow, 0 0 0 1px $secondary-color
 
   @media (prefers-color-scheme: dark)
     color: #fff
     background: #000
-    box-shadow: 0 0 0 1px $secondary-color-dark
+    box-shadow: $drop-shadow, 0 0 0 1px $secondary-color-dark
 
   &.selected
     color: #fff !important
     background: $primary-color
-    box-shadow: 0 0 0 1px $primary-color
+    box-shadow: $drop-shadow, 0 0 0 1px $primary-color
     font-weight: 600
 
   &:hover
     color: #fff
     background: lighten($primary-color, 10%)
-    box-shadow: 0 0 0 1px lighten($primary-color, 10%)
+    box-shadow: $drop-shadow, 0 0 0 1px lighten($primary-color, 10%)
 
   &:active
+    color: #fff
     background: darken($primary-color, 10%)
-    box-shadow: 0 0 0 1px darken($primary-color, 10%)
+    box-shadow: $drop-shadow, 0 0 0 1px darken($primary-color, 10%)
 
   &:disabled
     background: desaturate($primary-color, 100%)
-    box-shadow: 0 0 0 1px desaturate($primary-color, 100%)
+    box-shadow: $drop-shadow, 0 0 0 1px desaturate($primary-color, 100%)
 
   &:last-child
     margin-right: 0
 
   &.danger
     color: $danger-color
-    box-shadow: 0 0 0 1px $danger-color
+    box-shadow: $drop-shadow, 0 0 0 1px $danger-color
+
+    &:active
+      color: #fff
+      background: darken($danger-color, 10%)
+      box-shadow: $drop-shadow, 0 0 0 1px darken($danger-color, 10%)
 
     &:hover
       color: #fff
       background: $danger-color
-      box-shadow: 0 0 0 2px $danger-color
+      box-shadow: $drop-shadow, 0 0 0 2px $danger-color
+
+  &.circle
+    border-radius: 100%
+    height: 36px
+    width: 36px
 
 .title
   margin-bottom: 0
@@ -141,6 +154,7 @@ code
 
 .select-cinema
   position: relative
+  width: min-content
 
   select
     border: none
@@ -148,6 +162,8 @@ code
     cursor: pointer
     margin-top: 0
     appearance: none
+    max-width: 100%
+    padding-right: 16px
 
     @media (prefers-color-scheme: light)
       background: #fff
@@ -161,6 +177,9 @@ code
     content: "▾"
     font-size: 32px
     opacity: $subtle-opacity
+    position: absolute
+    top: -5px
+    right: 0
 
 .cinemas
   display: flex
@@ -177,10 +196,10 @@ code
     border-radius: $border-radius
 
     @media (prefers-color-scheme: light)
-      box-shadow: 0 0 0 1px $secondary-color
+      box-shadow: $drop-shadow, 0 0 0 1px $secondary-color
 
     @media (prefers-color-scheme: dark)
-      box-shadow: 0 0 0 1px $secondary-color-dark
+      box-shadow: $drop-shadow, 0 0 0 1px $secondary-color-dark
 
     @include responsive(pc)
       margin: 0 $horizontal-padding $horizontal-padding 0
@@ -209,25 +228,36 @@ code
       height: 100%
       border-radius: $border-radius
 
-    .name
+    .name, .vote
       display: flex
       padding: $vertical-padding $horizontal-padding
       position: absolute
-      bottom: 0
       color: white
-      background: $primary-color
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7)
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5)
       font-size: $font-size-small
       font-weight: 600
       flex-grow: 1
-      border-top-right-radius: $border-radius
+      
       visibility: hidden
+
+    .name
+      bottom: 0
+      border-top-right-radius: $border-radius - 1
+      border-bottom-left-radius: $border-radius - 1
+      background: $primary-color
+
+    .vote
+      top: 0
+      right: 0
+      border-top-right-radius: $border-radius - 1
+      border-bottom-left-radius: $border-radius - 1
+      background: $success-color
 
     &:hover
       box-shadow: 0 0 0 3px $primary-color
       cursor: pointer
 
-      .name
+      .name, .vote
         visibility: visible
 
 .movie-details
@@ -250,12 +280,6 @@ code
     background: rgba(#000, 0.9)
 
   .header
-    display: flex
-    align-items: center
-
-    @include responsive(phone)
-      flex-direction: column-reverse
-
     .title
       flex-grow: 1
       margin-bottom: $vertical-margin * 2
@@ -263,6 +287,11 @@ code
       .name
         font-size: 34px
         margin-bottom: 0
+
+      .year
+        opacity: $subtle-opacity
+        margin-left: $horizontal-padding
+        font-weight: 400
       
       .tagline
         margin: 0 0 $vertical-margin 0
@@ -272,8 +301,11 @@ code
         opacity: $subtle-opacity
 
     .buttons
+      position: absolute
       display: flex
       flex-wrap: wrap
+      top: 0
+      right: 0
 
   .content
     display: flex
@@ -292,10 +324,10 @@ code
         border-radius: $border-radius
 
         @media (prefers-color-scheme: light)
-          box-shadow: 0 0 0 1px $secondary-color
+          box-shadow: $drop-shadow, 0 0 0 1px $secondary-color
 
         @media (prefers-color-scheme: dark)
-          box-shadow: 0 0 0 1px $secondary-color-dark
+          box-shadow: $drop-shadow, 0 0 0 1px $secondary-color-dark
 
         @include responsive(pc)
           width: 320px
@@ -306,7 +338,7 @@ code
         @include responsive(phone)
           width: 100%
 
-      .sessions
+      .links, .sessions
         display: flex
         flex-direction: column
         align-items: center
@@ -315,11 +347,10 @@ code
         .heading
           margin-top: $vertical-margin
 
-        @include responsive(phone)
-          margin-bottom: $vertical-margin
+        .buttons
+          width: 100%
 
-        .session
-          margin: $vertical-margin 0 0 0
+        .button
           width: 100%
 
     .detail
@@ -349,10 +380,10 @@ code
             border-radius: $border-radius
 
             @media (prefers-color-scheme: light)
-              box-shadow: 0 0 0 1px $secondary-color
+              box-shadow: $drop-shadow, 0 0 0 1px $secondary-color
 
             @media (prefers-color-scheme: dark)
-              box-shadow: 0 0 0 1px $secondary-color-dark
+              box-shadow: $drop-shadow, 0 0 0 1px $secondary-color-dark
 
           .cast-name
             font-weight: 600
@@ -368,6 +399,12 @@ code
     font-size: $font-size
     font-weight: 800
 
+.floating-buttons
+  position: fixed
+  top: $vertical-margin
+  right: $horizontal-margin
+  z-index: 200
+
 .video-responsive
   margin-top: $vertical-margin * 2
 
@@ -377,10 +414,10 @@ code
     border-radius: $border-radius
 
     @media (prefers-color-scheme: light)
-      box-shadow: 0 0 0 1px $secondary-color
+      box-shadow: $drop-shadow, 0 0 0 1px $secondary-color
 
     @media (prefers-color-scheme: dark)
-      box-shadow: 0 0 0 1px $secondary-color-dark
+      box-shadow: $drop-shadow, 0 0 0 1px $secondary-color-dark
 
     @include responsive(phone)
       width: 100%

@@ -46,7 +46,6 @@ const App = (): React.ReactElement => {
   };
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
     const item = cinemas.find((item) => item.id === event.target.value);
     if (item) handleChangeCinema(item);
   };
