@@ -14,6 +14,7 @@ export interface MovieCardProps {
 export interface MovieDetailsProps {
   movie: MoviePro;
   onClose: () => void;
+  updateTitle: (title: string | undefined) => void;
 }
 
 export interface YoutubeEmbedProps {

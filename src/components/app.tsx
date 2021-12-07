@@ -16,6 +16,7 @@ const App = (): React.ReactElement => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    updateTitle(undefined);
     setLoading(true);
     fetch(`${process.env.REACT_APP_API_URL}/zine/cinema`)
       .then(async (resp) => {
@@ -58,13 +59,31 @@ const App = (): React.ReactElement => {
     setSelectedMovie(undefined);
   };
 
+  const updateTitle = (title: string | undefined) => {
+    const baseTitle = capitalize(process.env.REACT_APP_TITLE || "");
+    const description = process.env.REACT_APP_DESCRIPTION || "";
+    if (title) {
+      document.title = `${title} | ${baseTitle}`;
+    } else {
+      document.title = `${baseTitle}: ${description}`;
+    }
+  };
+
+  const capitalize = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="app">
       {selectedMovie && (
-        <MovieDetails movie={selectedMovie} onClose={handleClose} />
+        <MovieDetails
+          movie={selectedMovie}
+          onClose={handleClose}
+          updateTitle={updateTitle}
+        />
       )}
       <h1 className="h1 title">
-        {process.env.REACT_APP_TITLE}{" "}
+        {capitalize(process.env.REACT_APP_TITLE || "")}{" "}
         <span className="version">v{process.env.REACT_APP_VERSION}</span>
       </h1>
       <p className="description">{process.env.REACT_APP_DESCRIPTION}</p>

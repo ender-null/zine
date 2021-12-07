@@ -31,6 +31,7 @@ export interface MoviePro extends Movie {
   year: number;
   releaseDate: string;
   budget: number;
+  revenue: number;
   popularity: number;
   voteAverage: number;
   voteCount: number;

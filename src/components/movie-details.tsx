@@ -12,18 +12,17 @@ const formatter = new Intl.NumberFormat("en-US", {
 const MovieDetails = ({
   movie,
   onClose,
+  updateTitle,
 }: MovieDetailsProps): React.ReactElement => {
   useEffect(() => {
     document.addEventListener("keyup", exit, false);
     document.body.style.overflow = "hidden";
-    document.title = `${movie.name}${movie.year ? ` (${movie.year})` : ""} | ${
-      process.env.REACT_APP_TITLE
-    }`;
+    updateTitle(`${movie.name}${movie.year ? ` (${movie.year})` : ""}`);
 
     return () => {
       document.removeEventListener("keyup", exit, false);
       document.body.style.overflow = "unset";
-      document.title = process.env.REACT_APP_TITLE || "";
+      updateTitle(undefined);
     };
   }, []);
 
@@ -155,12 +154,16 @@ const MovieDetails = ({
                 <span>{formatter.format(movie.budget)}</span>
               </div>
             )}
+            {movie.revenue > 0 && (
+              <div className="detail">
+                <h5 className="heading">Recaudación</h5>
+                <span>{formatter.format(movie.revenue)}</span>
+              </div>
+            )}
             {movie.voteAverage > 0 && (
               <div className="detail">
-                <h5 className="heading">
-                  Puntuación de usuarios (The Movie Database)
-                </h5>
-                <span>{movie.voteAverage * 10}%</span>
+                <h5 className="heading">Puntuación (The Movie Database)</h5>
+                <span>{movie.voteAverage}</span>
               </div>
             )}
             {movie.director && (
