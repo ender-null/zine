@@ -39,8 +39,10 @@ const MovieDetails = ({
   }, []);
 
   const formatSession = (session: Session): string => {
-    const text = `Sala ${session.room} | ${session.time}`;
-    return session.type ? `[${session.type}] ${text}` : text;
+    let text = session.time;
+    if (session.room) text = `Sala   ${session.room} | ${text}`;
+    if (session.type) text = `${text}   [${session.type}]`;
+    return text.trim();
   };
 
   return (
