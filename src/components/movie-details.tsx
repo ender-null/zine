@@ -130,7 +130,7 @@ const MovieDetails = ({
                 <span>{movie.synopsis}</span>
               </div>
             )}
-            {movie.genres && (
+            {movie.genres?.length > 0 && (
               <div className="detail">
                 <h5 className="heading">Género</h5>
                 <span>{movie.genres.join(", ")}</span>

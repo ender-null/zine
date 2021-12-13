@@ -15,7 +15,7 @@ export interface Movie {
   duration?: number;
   durationReadable?: string;
   director?: Crew;
-  genres?: string[];
+  genres: string[];
   actors?: Actor[];
   poster?: string;
   trailer: string | null;
