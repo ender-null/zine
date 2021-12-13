@@ -17,7 +17,11 @@ const MovieDetails = ({
   useEffect(() => {
     document.addEventListener("keyup", exit, false);
     document.body.style.overflow = "hidden";
-    updateTitle(`${movie.name}${movie.year ? ` (${movie.year})` : ""}`);
+    updateTitle(
+      `${movie.name}${
+        movie.specialEdition ? ` [${movie.specialEdition}]` : ""
+      }${movie.year ? ` (${movie.year})` : ""}`
+    );
 
     return () => {
       document.removeEventListener("keyup", exit, false);
@@ -57,6 +61,11 @@ const MovieDetails = ({
           <div className="title">
             <h3 className="h3 name">
               {movie.name}
+              {movie.specialEdition ? (
+                <span className="special-edition">
+                  [{movie.specialEdition}]
+                </span>
+              ) : null}
               {movie.year ? <span className="year">({movie.year})</span> : null}
             </h3>
             {movie.tagline && <p className="tagline">{movie.tagline}</p>}

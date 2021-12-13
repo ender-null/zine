@@ -10,6 +10,7 @@ export interface Cinema {
 export interface Movie {
   id: string;
   name: string;
+  specialEdition?: string;
   sessions: Session[];
   synopsis?: string;
   duration?: number;

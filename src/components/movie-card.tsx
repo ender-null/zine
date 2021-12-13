@@ -8,7 +8,10 @@ const MovieCard = ({
   return (
     <div className="movie" onClick={() => selectMovie(movie)}>
       <img className="poster" src={movie.poster} />
-      <div className="name">{movie.name}</div>
+      <div className="name">
+        {movie.name}
+        {movie.specialEdition ? ` [${movie.specialEdition}]` : null}
+      </div>
       {movie.voteAverage > 0 && <div className="vote">{movie.voteAverage}</div>}
     </div>
   );
