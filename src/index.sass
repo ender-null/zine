@@ -318,11 +318,14 @@ code
       flex-direction: column
 
     .sidebar
+
       @include responsive(pc)
         margin-right: $horizontal-margin
+        width: min-content
 
       @include responsive(tablet)
         margin-right: $horizontal-margin
+        width: min-content
 
       .poster
         border-radius: $border-radius
