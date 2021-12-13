@@ -109,22 +109,24 @@ const MovieDetails = ({
                 )}
               </div>
             </div>
-            <div className="sessions">
-              <h5 className="heading">Compra de entradas</h5>
-              <div className="buttons">
-                {movie.sessions.map((session) => {
-                  return (
-                    <button
-                      key={session.time}
-                      className="button session"
-                      onClick={() => handleOpenInTab(session.url)}
-                    >
-                      {formatSession(session)}
-                    </button>
-                  );
-                })}
+            {movie.sessions.length > 0 && (
+              <div className="sessions">
+                <h5 className="heading">Compra de entradas</h5>
+                <div className="buttons">
+                  {movie.sessions.map((session) => {
+                    return (
+                      <button
+                        key={session.time}
+                        className="button session"
+                        onClick={() => handleOpenInTab(session.url)}
+                      >
+                        {formatSession(session)}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="details">
             {movie.originalName && (
