@@ -17,23 +17,47 @@ const App = (): React.ReactElement => {
 
   useEffect(() => {
     updateTitle(undefined);
+    initialLoad();
+  }, []);
+
+  const initialLoad = () => {
     setLoading(true);
+    let _cinemas = null;
+    const savedCinemas = localStorage.getItem("cinemas");
+    if (savedCinemas) {
+      _cinemas = JSON.parse(savedCinemas);
+      setCinemas(_cinemas);
+    }
+    let _selectedCinema = null;
+    const savedSelectedCinemas = localStorage.getItem("selectedCinema");
+    if (savedSelectedCinemas) {
+      _selectedCinema = JSON.parse(savedSelectedCinemas);
+      setSelectedCinema(_selectedCinema);
+    }
+    loadCinemas(_selectedCinema);
+  };
+
+  const loadCinemas = (_selectedCinema: Cinema) => {
     fetch(`${process.env.REACT_APP_API_URL}/zine/cinema`)
       .then(async (resp) => {
         const _cinemas = await resp.json();
+        localStorage.setItem("cinemas", JSON.stringify(_cinemas));
         setCinemas(_cinemas);
-        handleChangeCinema(_cinemas[0]);
+        _selectedCinema
+          ? handleChangeCinema(_selectedCinema)
+          : handleChangeCinema(_cinemas[0]);
         setLoading(false);
       })
       .catch((ex) => {
         console.error(ex);
       });
-  }, []);
+  };
 
   const handleChangeCinema = (cinema: Cinema) => {
     if (selectedCinema && selectedCinema.id === cinema.id) return;
 
     setLoading(true);
+    localStorage.setItem("selectedCinema", JSON.stringify(cinema));
     setSelectedCinema(cinema);
     fetch(`${process.env.REACT_APP_API_URL}/zine/cinema/${cinema.id}`)
       .then(async (resp) => {
@@ -52,10 +76,12 @@ const App = (): React.ReactElement => {
   };
 
   const handleSelectMovie = (movie: MoviePro | undefined) => {
+    localStorage.setItem("movie", JSON.stringify(movie));
     setSelectedMovie(movie);
   };
 
   const handleClose = () => {
+    localStorage.removeItem("movie");
     setSelectedMovie(undefined);
   };
 
