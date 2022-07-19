@@ -101,13 +101,6 @@ const App = (): React.ReactElement => {
 
   return (
     <div className="app">
-      {selectedMovie && (
-        <MovieDetails
-          movie={selectedMovie}
-          onClose={handleClose}
-          updateTitle={updateTitle}
-        />
-      )}
       <h1 className="h1 title">
         {capitalize(process.env.REACT_APP_TITLE || "")}{" "}
         <span className="version">v{process.env.REACT_APP_VERSION}</span>
@@ -127,17 +120,6 @@ const App = (): React.ReactElement => {
             );
           })}
         </select>
-      </div>
-      <div className="movies">
-        {movies?.map((movie) => {
-          return (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              selectMovie={handleSelectMovie}
-            />
-          );
-        })}
       </div>
       {loading && <Loader text="Cargando..." />}
     </div>

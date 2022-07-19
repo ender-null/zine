@@ -11,6 +11,11 @@ export interface MovieCardProps {
   selectMovie: (movie: MoviePro) => void;
 }
 
+export interface MoviesProps {
+  setLoading: (loading: boolean) => void;
+  updateTitle: (title: string | undefined) => void;
+}
+
 export interface MovieDetailsProps {
   movie: MoviePro;
   onClose: () => void;
