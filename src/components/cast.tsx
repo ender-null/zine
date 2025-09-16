@@ -11,7 +11,7 @@ const Cast = ({ cast }: CastProps): React.ReactElement => {
     setTheme(
       window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
-        : "light"
+        : "light",
     );
 
     return () => {

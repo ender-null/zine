@@ -5,6 +5,7 @@ const YoutubeEmbed = ({
   url,
 }: YoutubeEmbedProps): React.ReactElement => {
   const [videoId, setVideoId] = useState(embedId);
+
   useEffect(() => {
     if (url) {
       const match = /(?:v=|embed\/)([\w|-]+)/.exec(url);
@@ -12,7 +13,7 @@ const YoutubeEmbed = ({
         setVideoId(match[1]);
       }
     }
-  });
+  }, [url]);
 
   return (
     <div className="video-responsive">

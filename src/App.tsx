@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Loader from "./components/loader";
 import MovieCard from "./components/movie-card";
@@ -6,10 +7,10 @@ import MovieDetails from "./components/movie-details";
 const App = (): React.ReactElement => {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [selectedCinema, setSelectedCinema] = useState<Cinema | undefined>(
-    undefined
+    undefined,
   );
   const [selectedMovie, setSelectedMovie] = useState<MoviePro | undefined>(
-    undefined
+    undefined,
   );
   const [movies, setMovies] = useState<MoviePro[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -42,9 +43,11 @@ const App = (): React.ReactElement => {
         const _cinemas = await resp.json();
         localStorage.setItem("cinemas", JSON.stringify(_cinemas));
         setCinemas(_cinemas);
-        _selectedCinema
-          ? handleChangeCinema(_selectedCinema)
-          : handleChangeCinema(_cinemas[0]);
+        if (_selectedCinema) {
+          handleChangeCinema(_selectedCinema);
+        } else {
+          handleChangeCinema(_cinemas[0]);
+        }
         setLoading(false);
       })
       .catch((ex) => {

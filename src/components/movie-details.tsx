@@ -12,13 +12,22 @@ const MovieDetails = ({
   onClose,
   updateTitle,
 }: MovieDetailsProps): React.ReactElement => {
+  const exit = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose],
+  );
+
   useEffect(() => {
     document.addEventListener("keyup", exit, false);
     document.body.style.overflow = "hidden";
     updateTitle(
       `${movie.name}${
         movie.specialEdition ? ` [${movie.specialEdition}]` : ""
-      }${movie.year ? ` (${movie.year})` : ""}`
+      }${movie.year ? ` (${movie.year})` : ""}`,
     );
 
     return () => {
@@ -26,19 +35,13 @@ const MovieDetails = ({
       document.body.style.overflow = "unset";
       updateTitle(undefined);
     };
-  }, []);
+  }, [exit, movie.name, movie.specialEdition, movie.year, updateTitle]);
 
   const handleOpenInTab = (url: string | undefined) => {
     if (!url) return;
     const newWindow = window.open(url, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = null;
   };
-
-  const exit = useCallback((event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      onClose();
-    }
-  }, []);
 
   const formatSession = (session: Session): string => {
     let text = session.time;
@@ -86,7 +89,7 @@ const MovieDetails = ({
                     className="button"
                     onClick={() =>
                       handleOpenInTab(
-                        `https://www.themoviedb.org/movie/${movie.theMovieDbId}?language=es-ES`
+                        `https://www.themoviedb.org/movie/${movie.theMovieDbId}?language=es-ES`,
                       )
                     }
                   >
@@ -98,7 +101,7 @@ const MovieDetails = ({
                     className="button"
                     onClick={() =>
                       handleOpenInTab(
-                        `https://www.imdb.com/title/${movie.imDbId}/`
+                        `https://www.imdb.com/title/${movie.imDbId}/`,
                       )
                     }
                   >
