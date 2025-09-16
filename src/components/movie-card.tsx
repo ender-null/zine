@@ -1,5 +1,4 @@
 import React from "react";
-import { MovieCardProps } from "../models/props.interface";
 
 const MovieCard = ({
   movie,

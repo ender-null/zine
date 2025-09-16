@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $vertical-padding: 6px
 $horizontal-padding: 12px
 $vertical-margin: 15px
@@ -106,17 +108,17 @@ code
 
   &:hover
     color: #fff
-    background: lighten($primary-color, 10%)
-    box-shadow: $drop-shadow, 0 0 0 1px lighten($primary-color, 10%)
+    background: color.adjust($primary-color, $lightness: 10%)
+    box-shadow: $drop-shadow, 0 0 0 1px color.adjust($primary-color, $lightness: 10%)
 
   &:active
     color: #fff
-    background: darken($primary-color, 10%)
-    box-shadow: $drop-shadow, 0 0 0 1px darken($primary-color, 10%)
+    background: color.adjust($primary-color, $lightness: -10%)
+    box-shadow: $drop-shadow, 0 0 0 1px color.adjust($primary-color, $lightness: -10%)
 
   &:disabled
-    background: desaturate($primary-color, 100%)
-    box-shadow: $drop-shadow, 0 0 0 1px desaturate($primary-color, 100%)
+    background: color.scale($primary-color, $saturation: -100%)
+    box-shadow: $drop-shadow, 0 0 0 1px color.scale($primary-color, $saturation: -100%)
 
   &:last-child
     margin-right: 0
@@ -128,13 +130,13 @@ code
 
     &:hover
       color: #fff
-      background: lighten($danger-color, 10%)
-      box-shadow: $drop-shadow, 0 0 0 1px lighten($danger-color, 10%)
+      background: color.adjust($danger-color, $lightness: 10%)
+      box-shadow: $drop-shadow, 0 0 0 1px color.adjust($danger-color, $lightness: -10%)
 
     &:active
       color: #fff
-      background: darken($danger-color, 10%)
-      box-shadow: $drop-shadow, 0 0 0 1px darken($danger-color, 10%)
+      background: color.adjust($danger-color, $lightness: -10%)
+      box-shadow: $drop-shadow, 0 0 0 1px color.adjust($danger-color, $lightness: -10%)
 
   &.circle
     border-radius: 100%

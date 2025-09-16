@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { LoaderProps } from "../models/props.interface";
 
 const Loader = ({ text }: LoaderProps): React.ReactElement => {
   const [show, setShow] = useState<boolean>(false);

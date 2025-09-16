@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Cinema, CinemaMoviesPro, MoviePro } from "../models/cinema.interface";
-import Loader from "./loader";
-import MovieCard from "./movie-card";
-import MovieDetails from "./movie-details";
+import Loader from "./components/loader";
+import MovieCard from "./components/movie-card";
+import MovieDetails from "./components/movie-details";
 
 const App = (): React.ReactElement => {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
@@ -38,7 +37,7 @@ const App = (): React.ReactElement => {
   };
 
   const loadCinemas = (_selectedCinema: Cinema) => {
-    fetch(`${process.env.REACT_APP_API_URL}/zine/cinema`)
+    fetch(`${import.meta.env.VITE_API_URL}/zine/cinema`)
       .then(async (resp) => {
         const _cinemas = await resp.json();
         localStorage.setItem("cinemas", JSON.stringify(_cinemas));
@@ -59,7 +58,7 @@ const App = (): React.ReactElement => {
     setLoading(true);
     localStorage.setItem("selectedCinema", JSON.stringify(cinema));
     setSelectedCinema(cinema);
-    fetch(`${process.env.REACT_APP_API_URL}/zine/cinema/${cinema.id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/zine/cinema/${cinema.id}`)
       .then(async (resp) => {
         const cinemaMovies: CinemaMoviesPro = await resp.json();
         setMovies(cinemaMovies.movies);
@@ -86,8 +85,8 @@ const App = (): React.ReactElement => {
   };
 
   const updateTitle = (title: string | undefined) => {
-    const baseTitle = capitalize(process.env.REACT_APP_TITLE || "");
-    const description = process.env.REACT_APP_DESCRIPTION || "";
+    const baseTitle = capitalize(import.meta.env.VITE_TITLE || "");
+    const description = import.meta.env.VITE_DESCRIPTION || "";
     if (title) {
       document.title = `${title} | ${baseTitle}`;
     } else {
@@ -109,10 +108,10 @@ const App = (): React.ReactElement => {
         />
       )}
       <h1 className="h1 title">
-        {capitalize(process.env.REACT_APP_TITLE || "")}{" "}
-        <span className="version">v{process.env.REACT_APP_VERSION}</span>
+        {capitalize(import.meta.env.VITE_TITLE || "")}{" "}
+        <span className="version">v{import.meta.env.VITE_VERSION}</span>
       </h1>
-      <p className="description">{process.env.REACT_APP_DESCRIPTION}</p>
+      <p className="description">{import.meta.env.VITE_DESCRIPTION}</p>
       <div className="select-cinema">
         <select
           className="h2"

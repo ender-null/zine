@@ -1,4 +1,4 @@
-export interface Cinema {
+interface Cinema {
   id: string;
   name: string;
   address?: string;
@@ -7,7 +7,7 @@ export interface Cinema {
   source?: string;
 }
 
-export interface Movie {
+interface Movie {
   id: string;
   name: string;
   specialEdition?: string;
@@ -23,7 +23,7 @@ export interface Movie {
   source?: string;
 }
 
-export interface MoviePro extends Movie {
+interface MoviePro extends Movie {
   originalName: string | null;
   writers: Crew[];
   theMovieDbId?: string;
@@ -38,7 +38,7 @@ export interface MoviePro extends Movie {
   voteCount: number;
 }
 
-export interface Session {
+interface Session {
   room: string;
   time: string;
   date?: string;
@@ -46,27 +46,27 @@ export interface Session {
   url?: string;
 }
 
-export interface Crew {
+interface Crew {
   name: string;
   picture?: string;
 }
 
-export interface Actor extends Crew {
+interface Actor extends Crew {
   character?: string;
 }
 
-export interface CinemaData {
+interface CinemaData {
   [id: string]: Cinema;
 }
 
-export type Cinemas = Array<Cinema>;
+type Cinemas = Array<Cinema>;
 
-export interface CinemaMovies extends Cinema {
+interface CinemaMovies extends Cinema {
   lastUpdated: string;
   movies: Movie[];
 }
 
-export interface CinemaMoviesPro extends Cinema {
+interface CinemaMoviesPro extends Cinema {
   lastUpdated: string;
   movies: MoviePro[];
 }

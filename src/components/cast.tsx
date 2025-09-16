@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CastProps } from "../models/props.interface";
 
 const Cast = ({ cast }: CastProps): React.ReactElement => {
   const [theme, setTheme] = useState<"light" | "dark">("light");

@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { Session } from "../models/cinema.interface";
-import { MovieDetailsProps } from "../models/props.interface";
 import Cast from "./cast";
 import YoutubeEmbed from "./youtube-embed";
 

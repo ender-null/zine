@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { YoutubeEmbedProps } from "../models/props.interface";
 
 const YoutubeEmbed = ({
   embedId,
