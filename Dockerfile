@@ -1,18 +1,22 @@
-FROM node:alpine AS builder
+FROM node:alpine as builder
 
-RUN mkdir -p /usr/src/app
+WORKDIR /app
 
-WORKDIR /usr/src/app
-
-COPY package.json ./
-COPY yarn.lock ./
 COPY . .
 
 RUN yarn --frozen-lockfile
 RUN yarn build
 
-FROM nginx:latest AS release
+FROM node:alpine as server
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/zine
 
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
+WORKDIR /app
+
+RUN npm install -g serve
+
+COPY --from=builder /app/dist .
+
+EXPOSE 3000
+
+CMD ["serve", "-s", ".", "-l", "3000"]
