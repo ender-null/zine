@@ -12,6 +12,7 @@
     "preview": "vite preview --port 8080"
   },
   "dependencies": {
+    "@aptabase/react": "^0.4.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

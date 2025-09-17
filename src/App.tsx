@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useAptabase } from "@aptabase/react";
 import React, { useEffect, useState } from "react";
 import Loader from "./components/loader";
 import MovieCard from "./components/movie-card";
 import MovieDetails from "./components/movie-details";
 
 const App = (): React.ReactElement => {
+  const { trackEvent } = useAptabase();
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [selectedCinema, setSelectedCinema] = useState<Cinema | undefined>(
     undefined,
@@ -57,6 +59,7 @@ const App = (): React.ReactElement => {
 
   const handleChangeCinema = (cinema: Cinema) => {
     if (selectedCinema && selectedCinema.id === cinema.id) return;
+    trackEvent("change_cinema", { cinema: cinema.id });
 
     setLoading(true);
     localStorage.setItem("selectedCinema", JSON.stringify(cinema));
@@ -80,6 +83,7 @@ const App = (): React.ReactElement => {
   const handleSelectMovie = (movie: MoviePro | undefined) => {
     localStorage.setItem("movie", JSON.stringify(movie));
     setSelectedMovie(movie);
+    trackEvent("select_movie", { movie: movie?.name || "unknown" });
   };
 
   const handleClose = () => {

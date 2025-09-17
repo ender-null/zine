@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aptabase/react@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@aptabase/react/-/react-0.4.0.tgz#d1ac07cbff51be8d39cc1129d85eec131600120b"
+  integrity sha512-N82DYXT1iioHbdSyWmfek65Lw+XXcfv8bChlS/TwBvWJ3z2lCBZLDQfqCo/d5PEADQobpJ/SkSILZhAtIlgoPg==
+
 "@babel/code-frame@^7.27.1":
   version "7.27.1"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz"
