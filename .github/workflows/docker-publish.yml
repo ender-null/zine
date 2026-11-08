@@ -159,7 +159,9 @@ jobs:
             docker pull ghcr.io/${{ github.repository }}:${{ env.TAG }}
             docker stop ${{ env.CONTAINER_NAME }}
             docker rm ${{ env.CONTAINER_NAME }}
-            docker run -p 8085:3000/tcp -ti -d --restart unless-stopped --name ${{ env.CONTAINER_NAME }} ghcr.io/${{ github.repository }}:${{ env.TAG }}
+            # Loopback (the tunnel) and the docker bridge only: Docker bypasses the host
+            # firewall, so a bare -p 8085 was reachable from the internet.
+            docker run -p 127.0.0.1:8085:3000/tcp -p "[::1]:8085:3000/tcp" -p 172.17.0.1:8085:3000/tcp --security-opt no-new-privileges --memory 512m -ti -d --restart unless-stopped --name ${{ env.CONTAINER_NAME }} ghcr.io/${{ github.repository }}:${{ env.TAG }}
 
       - name: Generate summary
         id: generate-summary
