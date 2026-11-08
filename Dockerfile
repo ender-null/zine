@@ -1,13 +1,13 @@
 # A pinned LTS major rather than the moving `node:alpine`: that tag moved to a
-# Node that no longer bundles yarn, and the build broke on the next push.
+# Node whose image no longer bundles yarn, and the build broke on the next push.
 FROM node:24-alpine AS builder
 
 WORKDIR /app
 
 COPY . .
 
-# yarn 1, which yarn.lock is written by; no longer in the base image.
-RUN npm install -g yarn@1.22.22 && yarn --frozen-lockfile
+# Node 24's image still ships yarn 1, which yarn.lock is written by.
+RUN yarn --frozen-lockfile
 RUN yarn build
 
 FROM node:24-alpine AS server
